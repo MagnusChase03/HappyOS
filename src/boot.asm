@@ -6,6 +6,9 @@ call print
 mov bx, buffer
 call readLine
 
+mov bx, buffer
+call print
+
 jmp $
 
 helloWorld:
