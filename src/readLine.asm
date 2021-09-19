@@ -6,17 +6,17 @@ readLine:
 
 readLineLoop:
     mov dx, [bx]
-    cmp dl, 0x0
+    cmp dl, 0x00
     je readLineEnd
 
-    mov ah, 0x0
+    mov ah, 0x00
     int 0x16
 
     mov ah, 0x0e
     int 0x10
 
     mov [bx], al
-    add bx, 0x1
+    add bx, 0x01
 
     jmp readLineLoop
 

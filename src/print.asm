@@ -8,12 +8,12 @@ printLoop:
     mov ah, 0x0e
     mov al, [bx]
 
-    cmp al, 0x0
+    cmp al, 0x00
     je printEnd
 
     int 0x10
 
-    add bx, 0x1
+    add bx, 0x01
     jmp printLoop
 
 printEnd:
