@@ -1,5 +1,6 @@
-SRC=$(wildcard src/*.c)
-OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
+SRC=$(wildcard src/*.c drivers/*.c)
+OBJ_TMP=$(patsubst src/%.c, obj/%.o, $(SRC))
+OBJ=$(patsubst drivers/%.c, obj/%.o, $(OBJ_TMP))
 
 TARGET=bin/os.bin
 
@@ -15,6 +16,9 @@ bin/kernel.bin: obj/kernelEntry.o $(OBJ)
 	ld -o $@ -Ttext 0x1000 -m elf_i386 $^ --oformat binary
 
 obj/%.o: src/%.c
+	gcc -o $@ -ffreestanding -fno-pie -m32 -c $^
+
+obj/%.o: drivers/%.c
 	gcc -o $@ -ffreestanding -fno-pie -m32 -c $^
 
 obj/%.o: src/%.asm
