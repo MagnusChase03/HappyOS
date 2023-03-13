@@ -4,6 +4,6 @@ void main() {
     //*videoMem = 'X';
 
     clearScreen();
-    print("Welcome to \n HappyOS");
+    print("Welcome to\nHappyOS");
 
 }

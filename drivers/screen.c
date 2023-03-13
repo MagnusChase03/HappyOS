@@ -1,6 +1,6 @@
 #define VIDEO_MEM 0xb8000
-#define MAX_ROWS 80
-#define MAX_COLS 68
+#define MAX_ROWS 140
+#define MAX_COLS 70
 #define WHITE_ON_BLACK 0x0f
 
 #define REG_SCREEN_CTRL 0x3d4
@@ -49,7 +49,7 @@ void printCharacter(char character, int offset) {
 
 int getOffset(int col, int row) {
 
-    return 2 * (row * MAX_ROWS + col);
+    return 2 * (row * MAX_COLS + col);
 
 }
 
