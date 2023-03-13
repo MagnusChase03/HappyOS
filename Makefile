@@ -1,10 +1,24 @@
-all: build
-build:
-	nasm -f bin -o obj/bootloader.bin bootloader.asm 
-	nasm -f elf -o obj/kernelEntry.o src/kernelEntry.asm
-	gcc -ffreestanding -fno-pie -m32 -c src/kernel.c -o obj/kernel.o
-	ld -o obj/kernel.bin -Ttext 0x1000 -m elf_i386 obj/kernelEntry.o obj/kernel.o --oformat binary
-	cat obj/bootloader.bin obj/kernel.bin > bin/os.bin
+SRC=$(wildcard src/*.c)
+OBJ=$(patsubst src/%.c, obj/%.o, $(SRC))
+
+TARGET=bin/os.bin
+
+all: $(TARGET)
+
+$(TARGET): bin/bootloader.bin bin/kernel.bin
+	cat $^ > $@
+
+bin/bootloader.bin: bootloader.asm
+	nasm -f bin -o $@ $^
+
+bin/kernel.bin: obj/kernelEntry.o $(OBJ)
+	ld -o $@ -Ttext 0x1000 -m elf_i386 $^ --oformat binary
+
+obj/%.o: src/%.c
+	gcc -o $@ -ffreestanding -fno-pie -m32 -c $^
+
+obj/%.o: src/%.asm
+	nasm -f elf -o $@ $^
 
 clean:
 	rm -r bin/* obj/*

@@ -1,5 +1,5 @@
 readKernel:
-    mov al, 15
+    mov al, 20
     mov bx, KERNEL_OFFSET
     call readDisk
 
