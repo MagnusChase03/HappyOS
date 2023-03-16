@@ -9,10 +9,23 @@ char getKeyPress() {
 
         case 0x10:
             return 'Q';
-            break;
+        case 0x11:
+            return 'W';
         default:
             return '\0';
-            break;
+
+    }
+
+}
+
+void displayKey() {
+
+    char key = getKeyPress();
+    if (key != '\0') {
+
+        int offset = getCursor();
+        printCharacter(key, offset);
+        setCursor(offset + 2);
 
     }
 
