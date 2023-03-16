@@ -51,6 +51,7 @@ void printCharacter(char character, int offset) {
     } else {
 
         ((char*) VIDEO_MEM)[offset] = character;
+        setCursor(getCursor() + 2);
 
     }
 

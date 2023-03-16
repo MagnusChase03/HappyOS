@@ -19,10 +19,10 @@ obj/%.o: src/%.asm
 	nasm -f elf -o $@ $^
 
 obj/%.o: src/%.c
-	gcc -o $@ -ffreestanding -fno-pie -m32 -c $^
+	gcc -o $@ -ffreestanding -fno-pie -fno-stack-protector -m32 -c $^
 
 obj/%.o: drivers/%.c
-	gcc -o $@ -ffreestanding -fno-pie -m32 -c $^
+	gcc -o $@ -ffreestanding -fno-pie -fno-stack-protector -m32 -c $^
 
 clean:
 	rm -r bin/* obj/*
