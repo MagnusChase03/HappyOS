@@ -1,6 +1,6 @@
 #define VIDEO_MEM 0xb8000
 #define MAX_ROWS 140
-#define MAX_COLS 70
+#define MAX_COLS 80
 #define WHITE_ON_BLACK 0x0f
 
 #define REG_SCREEN_CTRL 0x3d4
@@ -13,7 +13,7 @@ void print(char* str) {
         int offset = getCursor();
         if (str[i] == '\n') {
 
-            setCursor(offset + (MAX_COLS * 2));
+            setCursor(getOffset(0, (offset / MAX_COLS / 2) + 1));
 
         } else {
 
