@@ -43,7 +43,16 @@ void clearScreen() {
 
 void printCharacter(char character, int offset) {
 
-    ((char*) VIDEO_MEM)[offset] = character;
+    if (character == '\n') {
+
+        int offset = getCursor();
+        setCursor(getOffset(0, (offset / MAX_COLS / 2) + 1));
+
+    } else {
+
+        ((char*) VIDEO_MEM)[offset] = character;
+
+    }
 
 }
 
