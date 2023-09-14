@@ -1,28 +1,17 @@
-SRC=$(wildcard src/*.c drivers/*.c)
-OBJ_TMP=$(patsubst src/%.c, obj/%.o, $(SRC))
-OBJ=$(patsubst drivers/%.c, obj/%.o, $(OBJ_TMP))
+SRC_DIR := ./src
+BIN_DIR := ./bin
 
-TARGET=bin/os.bin
+EXECUTABLE := $(BIN_DIR)/happyOS.bin
+BOOTLOADER_BIN := $(BIN_DIR)/rm/bootloader.o
 
-all: $(TARGET)
+.PHONY: clean
 
-$(TARGET): bin/bootloader.bin bin/kernel.bin
-	cat $^ > $@
+$(EXECUTABLE): $(BOOTLOADER_BIN) 
+	cat $^ >> $(EXECUTABLE)
 
-bin/bootloader.bin: bootloader.asm
-	nasm -f bin -o $@ $^
-
-bin/kernel.bin: obj/kernelEntry.o $(OBJ) obj/idt.o
-	ld -o $@ -Ttext 0x1000 -m elf_i386 $^ --oformat binary
-
-obj/%.o: src/%.asm
-	nasm -f elf -o $@ $^
-
-obj/%.o: src/%.c
-	gcc -o $@ -ffreestanding -fno-pie -fno-stack-protector -m32 -c $^
-
-obj/%.o: drivers/%.c
-	gcc -o $@ -ffreestanding -fno-pie -fno-stack-protector -m32 -c $^
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.asm
+	@mkdir -p $(@D)
+	nasm -o $@ $<
 
 clean:
-	rm -r bin/* obj/*
+	rm -r bin
