@@ -2,6 +2,8 @@ printf:
     pusha
     mov ah, 0x0e
 
+; Loop over every character and BIOS print them
+; When hitting a null, exit
 printf_loop:
     mov al, [bx]
     cmp al, 0x0
@@ -15,6 +17,7 @@ printf_end:
     popa
     ret
 
+; Prints a line feed and carriage return
 printf_new_line:
     pusha
     mov ah, 0x0e

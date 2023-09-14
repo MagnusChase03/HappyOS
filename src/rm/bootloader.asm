@@ -1,7 +1,7 @@
-[bits 16]
-[org 0x7c00]
+[bits 16] ; 16 bit real mode
+[org 0x7c00] ; Data offset in bootsector
 
-mov bx, message
+mov bx, bootloader_start_msg
 call printf
 
 mov bx, 0x1234
@@ -12,7 +12,8 @@ jmp $
 %include "./src/rm/io/printf.asm"
 %include "./src/rm/io/printx.asm"
 
-message: db "Init HappyOS...", 0
+bootloader_start_msg: db "Init HappyOS...", 0
 
-times 510 - ($ - $$) db 0
-dw 0xaa55
+; Allocated 512 bytes for boot sector ending in magic numbers 0x55 0xAA
+times 510 - ($ - $$) db 0 
+dw 0xaa55 

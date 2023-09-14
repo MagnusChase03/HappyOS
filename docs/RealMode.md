@@ -1,26 +1,41 @@
 # Real Mode
 
+*The initial mode that BIOS starts our bootloader in.*
+
+## Table of Contents
+
+- [Files](#files)
+- [How It Works](#how-it-works)
+
 ## Files
-- bootloader.asm
-- io
-    - printf.asm
-    - printx.asm
+```
+bootloader.asm
+io/
+    printf.asm
+    printx.asm
+```
 
 **bootloader.asm**
 
-*Used to bootstap the kernel*
+Responsible for loading and executing the kernel, and is responsible for starting 32bit protected mode.
 
 **io/printf.asm**
 
-*Prints a string to the screen followed by a new line*
+*Prints a string followed by a new line.*
 
 Args:
+-   `bx`: A pointer to the string to print
 
-- bx: Pointer to string
+**io/printx.asm**
 
-**io/print.asm**
-
-Prints the string of a hex value
+*Prints a string representation of a hex value.*
 
 Args:
-- bx: Hex value
+-   `bx`: The hex value to print
+
+## How it works
+
+- BIOS loads boot sector with our bootloader
+- Bootloader loads in kernel
+- Bootloader starts 32bit protected mode
+- Bootloader jumps to kernel

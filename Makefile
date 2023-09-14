@@ -7,7 +7,7 @@ BOOTLOADER_BIN := $(BIN_DIR)/rm/bootloader.o
 .PHONY: clean
 
 $(EXECUTABLE): $(BOOTLOADER_BIN) 
-	cat $^ >> $(EXECUTABLE)
+	cat $^ >> $@
 
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.asm
 	@mkdir -p $(@D)
